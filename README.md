@@ -1,7 +1,7 @@
 # onair-rs
 ON AIR indicator sign service for remote workers. Uses a client on your local machine to monitor for an active video conference session and messages the sign controller to turn on and off an ON AIR sign.
 
-Current supports monitoring for Zoom conference, and a Scroll pHAT HD display on Raspberry Pi. Tested on a Pi Zero W.
+Current supports monitoring for Zoom & WebEx conferences, and a Scroll pHAT HD display on Raspberry Pi. Tested on a Pi Zero W.
 
 ## Running
 To build and run the server for local dev
@@ -35,17 +35,20 @@ Turning on sign
 
 ```curl -X POST -H "Content-Type: application/json" -d '{"onair":true}' http://localhost:8000/```
 
-Setting to off:
+Turning off sign:
 
 ```curl -X POST -H "Content-Type: application/json" -d '{"onair":false}' http://localhost:8000/```
 
+Use client to automatically detect ON AIR status:
+
+```cargo run --bin client -- http://localhost:8000/```
+
+
 ## TODO
-- [ ] Add Rust client.
-- [ ] Add support for detecting Webex, GoToMeeting, Skype, Slack, and Hangouts calls.
+- [x] Add Rust client.
+- [ ] Add support for detecting GoToMeeting, Skype, Slack, and Hangouts calls.
+- [ ] Refine support for WebEx.
 - [ ] Remove Rocket and replace with basic Hyper implementation. Rocket is overkill and too heavy for an RPi build.
 - [ ] Allow the displayed message to be configured.
 - [ ] Add support for alternative displays and USB-powered signs/lights.
-
-
-
 
