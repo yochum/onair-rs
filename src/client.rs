@@ -26,12 +26,19 @@ fn main() -> Result<(), reqwest::Error> {
         _ => println!("Too many args"),
      }
 
+    let mut last_onair = false;
     loop {
         let onair = match get_onair_status() {
             Ok(v) => v,
             Err(_e) => false,
         };
 
+        if last_onair == onair {
+            std::thread::sleep(std::time::Duration::from_millis(30000));
+            continue;
+        }
+        last_onair = onair;
+        
         let payload = OnAir {
             onair: onair,
         };
